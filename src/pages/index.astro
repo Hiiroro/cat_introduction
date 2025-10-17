@@ -1,0 +1,67 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫の手も借りたい</title>
+  </head>
+  <body>
+    <header class="header">
+      <h1>🐾 猫の手も借りたい 🐾</h1>
+    </header>
+
+    <main class="main-content">
+      <h2>かわいい猫と一緒に</h2>
+      <h2>一緒にタスクを管理しよう！</h2>
+
+      <div class="paws-grid">
+        <a href="/purpose" class="paw-item">
+          <img src="/paws.png" alt="目的" />
+          <span>このアプリの目的</span>
+        </a>
+        <a href="/block" class="paw-item">
+          <img src="/paws.png" alt="ブロック機能" />
+          <span>SNS<br />ブロック機能とは？</span>
+        </a>
+        <a href="/cat_can" class="paw-item">
+          <img src="/paws.png" alt="猫缶とは" />
+          <span>猫缶とは？</span>
+        </a>
+        <a href="/book" class="paw-item">
+          <img src="/paws.png" alt="猫図鑑" />
+          <span>猫図鑑とは？</span>
+        </a>
+
+        <!-- 真ん中の猫画像 -->
+        <div class="cat-center">
+          <img src="/main.png" alt="猫のイラスト" />
+        </div>
+      </div>
+
+      <div class="start-button">
+        <a href="https://my-app.yinyoo2904.workers.dev/" target="_blank">
+          今すぐ始める
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2025 猫の手も借りたい</p>
+    </footer>
+
+    <!-- 🐱 音声の追加 -->
+    <audio id="meow-sound" src="/猫の鳴き声1.mp3" preload="auto"></audio>
+    <script>
+      const catImage = document.querySelector('.cat-center img');
+      const meowSound = document.getElementById('meow-sound');
+
+      catImage.addEventListener('mouseenter', () => {
+        meowSound.currentTime = 0;
+        meowSound.play();
+      });
+    </script>
+  </body>
+</html>

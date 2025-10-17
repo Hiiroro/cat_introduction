@@ -1,0 +1,232 @@
+body {
+  font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  cursor: url("/play_32.png"), auto;
+}
+
+.header {
+  background-color: #d8c97b;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+/* index.astro のメインコンテンツのスタイル */
+.main-content {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.main-content h2 {
+  margin: 0.5rem 0;
+}
+
+.paws-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  max-width: 700px;
+  margin: 2rem auto;
+  gap: 1rem;
+  align-items: center;
+  justify-items: center;
+  position: relative;
+}
+
+.paw-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.paw-item img {
+  width: 120px;
+  height: auto;
+}
+
+.paw-item:hover {
+  transform: scale(1.1);
+}
+
+.cat-center {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+}
+
+.cat-center img {
+  width: 200px;
+  height: auto;
+}
+
+.start-button a {
+  display: inline-block;
+  background-color: #f5a392;
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background 0.3s;
+}
+
+.start-button a:hover {
+  background-color: #e17d70;
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: center;
+  color: #777;
+  padding-bottom: 1rem;
+}
+
+
+/* --- block.astro 関連のスタイル追記 --- */
+
+/* block.astro のメインコンテンツのスタイル */
+.page-content {
+  max-width: 1000px; /* ページの最大幅を設定 */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+/* 戻るリンクのスタイル（修正済み） */
+.back-link {
+  display: block;
+  width: auto; /* <--- 修正箇所：幅を自動調整に変更し、改行を防ぐ */
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 1rem;
+  padding: 0.5rem;
+  transition: color 0.2s;
+  text-align: left;
+  margin-left: 0;
+  max-width: 100%;
+}
+
+.back-link:hover {
+  color: #000;
+}
+
+/* コンテンツ全体を囲むコンテナ (左側の情報と右側の画像を並べる) */
+.block-feature-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: flex-start; /* 上端を揃える */
+  margin-top: 2rem;
+}
+
+/* 情報フレーム (左側) のスタイル */
+.info-frame {
+  flex: 1;
+  max-width: 450px;
+  min-height: 400px; /* 高さの目安 */
+  border: 4px solid #d8c97b; /* 添付画像にあるような金色の枠線 */
+  position: relative;
+  background-color: #ffffff; /* 背景色 */
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* 猫のアイコン行のスタイル */
+.cat-icon-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+  border-bottom: 2px solid #d8c97b; /* 上部の区切り線 */
+}
+
+.cat-icon-row img {
+  width: 25px;
+  height: auto;
+}
+
+.cat-icon-row.bottom-row {
+  border-top: 2px solid #d8c97b; /* 下部の区切り線 */
+  border-bottom: none;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  /* 画像の猫アイコンを再現するための調整 */
+  flex-wrap: wrap; /* アイコンが多い場合は折り返す */
+}
+
+.cat-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* テキスト部分のスタイル */
+.info-text {
+  padding: 1rem 0;
+  text-align: left;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  /* 左側の枠線の猫アイコンの並びを再現するためのスペース調整 */
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.text-with-cats {
+  margin-bottom: 1rem;
+  text-indent: -1.5rem; /* 🐾を左に寄せるためのインデント */
+  padding-left: 1.5rem;
+}
+
+/* 右側の猫の画像コンテナのスタイル */
+.cat-image-box {
+  flex: 1;
+  max-width: 450px;
+  border: 1px solid #ccc; /* 画像を囲む枠線 */
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat-main-image {
+  max-width: 100%;
+  height: auto;
+  /* 添付画像の四角い枠に合わせて調整 */
+  display: block;
+}
+
+/* 今すぐ始めるボタンを右下に寄せるための調整 */
+.block-page-start-button {
+  text-align: right;
+  max-width: 930px; /* block-feature-containerの幅に合わせる */
+  margin: 1rem auto;
+}
+
+/* レスポンシブ対応 (必要に応じて) */
+@media (max-width: 800px) {
+  .block-feature-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .info-frame,
+  .cat-image-box {
+    max-width: 100%;
+  }
+
+  .block-page-start-button {
+    text-align: center;
+    max-width: 100%;
+  }
+}
