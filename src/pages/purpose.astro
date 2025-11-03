@@ -7,20 +7,37 @@ import "../styles/global.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>このアプリの目的 | 猫の手も借りたい</title>
-    </head>
+  </head>
+
   <body>
     <header class="header">
-      <h1>🐾 猫の手も借りたい 🐾</h1>
+    <h1>
+      <a href="/" style="text-decoration: none; color: inherit;">
+        🐾 猫の手も借りたい 🐾
+      </a>
+    </h1>
     </header>
 
-    <main class="page-content">
-      <a href="/" class="back-link">
-        &larr; 戻る
-      </a>
+    <main class="page-content cat-sides">
+      <!-- 左サイドの猫 -->
+      <div class="cat-side left"></div>
 
+      <!-- 右サイドの猫 -->
+      
+      <div class="cat-side right"></div>
+
+      <a href="/" class="back-link">← 戻る</a>
+
+      <br>
+      <br>
       <h2 class="page-title">このアプリの目的</h2>
 
-      <div class="block-feature-container">
+      <section class="intro-section">
+        <div class="cat-support-right">
+          <img src="/saport.png" alt="支える猫" style="transform: scaleX(-1);" />
+        </div>
+
+       <div class="block-feature-container">
         <div class="info-frame">
           <div class="cat-icon-row">
             <img src="/paws.png" alt="猫の足跡" />
@@ -32,7 +49,6 @@ import "../styles/global.css";
           <div class="info-text">
             <div class="text-with-cats">
               🐾_「猫の手も借りたい」というアプリは習慣化できない学生向けのタスク管理システムです。
-
             </div>
             <div class="text-with-cats">
               🐾_他のタスク管理アプリとは違い指定時間のSNS等のブロック、タスク達成の連続記録を分析し可視化する機能が備わっています。
@@ -57,11 +73,33 @@ import "../styles/global.css";
             <span class="cat-emoji">🐾</span>
           </div>
         </div>
-        
-        <div class="cat-image-box">
-          <img src="/4.png" alt="箱の中の猫" class="cat-main-image" />
+
+        <div class="cat-support-left">
+          <img src="/saport.png" alt="支える猫" />
         </div>
-      </div>
+      </section>
+
+      <section class="howto">
+
+        <h2>マンガで分かるこのアプリの魅力</h2>
+        <img src="/manga.png" alt="手順2" class="static-img" style="height:200%;">
+
+      <br>
+      <br>
+      <br>
+      
+        <h2>タスク入力までの手順</h2>
+
+        <div class="slideshow">
+          <img src="/1枚目.png" alt="手順1" id="slide-img" />
+          <div id="restart-text" class="restart-text">もう一度見る</div>
+        </div>
+      </section>
+
+      <section class="nyan-section">
+        
+        <img src="/1.png" alt="箱の中の猫" class="cat-box" />
+      </section>
 
       <div class="start-button block-page-start-button">
         <a href="https://my-app.yinyoo2904.workers.dev/" target="_blank">
@@ -73,5 +111,45 @@ import "../styles/global.css";
     <footer>
       <p>© 2025 猫の手も借りたい</p>
     </footer>
+
+    <script>
+      const images = [
+        "/1枚目.png",
+        "/2枚目.png",
+        "/3枚目.png",
+        "/4枚目.png",
+        "/5枚目.png",
+        "/6枚目.png"
+      ];
+      let current = 0;
+      const imgElement = document.getElementById("slide-img");
+      const restartText = document.getElementById("restart-text");
+
+      let intervalId = setInterval(nextImage, 3000);
+
+      function nextImage() {
+        current++;
+        if (current < images.length) {
+          imgElement.src = images[current];
+        } else {
+          clearInterval(intervalId);
+          setTimeout(() => {
+            restartText.style.display = "block";
+            restartText.classList.add("fade-in");
+          }, 3000);
+        }
+      }
+
+      restartText.addEventListener("click", () => {
+        current = 0;
+        imgElement.src = images[current];
+        restartText.style.display = "none";
+        restartText.classList.remove("fade-in");
+        intervalId = setInterval(nextImage, 3000);
+      });
+    </script>
   </body>
 </html>
+
+
+

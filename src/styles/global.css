@@ -108,7 +108,7 @@ footer {
   width: auto; /* <--- 修正箇所：幅を自動調整に変更し、改行を防ぐ */
   margin-bottom: 1rem;
   text-decoration: none;
-  color: #007bff;
+  color: #007bff !important;
   font-size: 1rem;
   padding: 0.5rem;
   transition: color 0.2s;
@@ -230,3 +230,256 @@ footer {
     max-width: 100%;
   }
 }
+
+/* --- purpose.astro 専用 --- */
+
+.intro-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.cat-support-left img,
+.cat-support-right img {
+  width: 100px;
+  height: auto;
+}
+
+.info-frame-frame {
+  border: 5px solid #d8c97b;
+  padding: 1rem;
+  background-color: #fff;
+  width: 400px;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.5;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.howto {
+  text-align: left;
+  margin: 3rem auto;
+  max-width: 700px;
+}
+
+.howto h2 {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+
+.slideshow {
+  text-align: center;
+}
+
+.slideshow img {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.static-img {
+  width: 100%;
+  max-width: 700px;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.nyan-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.speech-bubble {
+  background: #fff;
+  border: 2px solid #7bbf6a;
+  border-radius: 20px;
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+  position: relative;
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50px;
+  border: 10px solid transparent;
+  border-top-color: #7bbf6a;
+}
+
+.cat-box {
+  width: 150px;
+  height: auto;
+}
+
+.slideshow {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.slideshow img {
+  width: 80%;
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease;
+}
+
+/* 「もう一度見る」テキストボタン */
+.restart-text {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  color: blue;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+  text-shadow: 0 1px 2px #fff;
+}
+
+.restart-text.fade-in {
+  opacity: 1;
+}
+
+.restart-text:hover {
+  background: #f5a392;
+  color: white;
+}
+
+/* --- サイド猫のデザイン --- */
+.cat-side {
+  position: fixed;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  background-image: url("/cat.png");
+  background-repeat: repeat-y;
+  background-size: contain;
+  background-position: center;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+
+.cat-side.left {
+  left: 0;
+  transform: scaleX(-1);
+}
+
+.cat-side.right {
+  right: 0;
+  
+}
+
+/* ページ全体 */
+.page-content {
+  padding: 40px 140px; /* サイドの猫が隠れないように余白 */
+  position: relative;
+  z-index: 1;
+}
+
+/* 既存部分（再掲） */
+.header {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+.back-link {
+  position: fixed;
+  top: 80px;
+  left: 160px;
+  color: #444;
+  text-decoration: none;
+}
+
+.restart-text {
+  display: none;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.8s;
+}
+.restart-text.fade-in {
+  display: block;
+  opacity: 1;
+}
+
+
+
+
+header.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #d8c97b; /* 下の内容が透けない様に */
+  z-index: 1000;
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 2px solid #f2c4d4; /* 可愛い線(任意) */
+}
+
+.page-content {
+  padding-top: 80px; /* header高さ分の余白 */
+}
+
+.back-link {
+  position: fixed !important;
+  top: 85px;
+  left: 20px;
+  z-index: 3000;
+  background: #d8c97b;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #444;
+  font-weight: bold;
+}
+
+
+/* 戻るボタンを絶対最前面にする */
+.back-link {
+  position: fixed !important;
+  top: 20px;
+  left: 20px;
+  z-index: 999999 !important; /* ←強制的に最前面 */
+}
+
+/* 他の要素が z-index で邪魔している可能性を排除 */
+.cat-side,
+.cat-support-left,
+.cat-support-right,
+.frame-inner,
+.intro-section,
+.page-content {
+  z-index: auto !important;
+}
+
+#slide-img {
+  width: 200%;   /* 横2倍 */
+  height: 200%;  /* 縦2倍 */
+  object-fit: contain; /* 画像の比率を崩さずに拡大したい場合 */
+}
+
