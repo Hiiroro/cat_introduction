@@ -1,37 +1,455 @@
+html,
+body {
+  height: 100%;
+}
+
+html {
+  font-size: clamp(16px, 1.6vw, 19px);
+}
+
 body {
   font-family: "Hiragino Kaku Gothic ProN", sans-serif;
-  background-color: #f7f7f7;
+  background: radial-gradient(
+      circle at 50% -20%,
+      rgba(255, 208, 148, 0.25),
+      rgba(255, 247, 236, 0.9) 55%,
+      #fff5ea 85%
+    );
   margin: 0;
+  line-height: 1.7;
   cursor: url("/play_32.png"), auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(150px, 20vw, 240px);
+  height: clamp(120px, 16vw, 200px);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  top: 18vh;
+  left: -22vw;
+  background-image: url("/1.png");
+  animation: cat-drift-left 46s linear infinite;
+}
+
+body::after {
+  top: 60vh;
+  left: -24vw;
+  background-image: url("/2.png");
+  width: clamp(170px, 22vw, 260px);
+  height: clamp(140px, 18vw, 220px);
+  animation: cat-drift-left 54s ease-in-out infinite;
+  animation-delay: 12s;
+}
+
+main::after {
+  content: "";
+  position: fixed;
+  bottom: 18vh;
+  right: -24vw;
+  width: clamp(140px, 19vw, 230px);
+  height: clamp(120px, 17vw, 205px);
+  background-image: url("/3.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  animation: cat-drift-right 58s ease-in-out infinite;
+  animation-delay: 24s;
+}
+
+@keyframes cat-drift-left {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(140vw);
+    opacity: 0;
+  }
+}
+
+@keyframes cat-drift-right {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-140vw);
+    opacity: 0;
+  }
 }
 
 .header {
-  background-color: #d8c97b;
+  background-image: linear-gradient(
+      rgba(216, 201, 123, 0.92),
+      rgba(216, 201, 123, 0.92)
+    ),
+    url("/miharineko.webp");
+  background-size: 100% 100%, 80px;
+  background-repeat: no-repeat, repeat;
   text-align: center;
-  padding: 1rem;
-  font-size: 1.5rem;
+  padding: clamp(0.5rem, 1.8vh, 0.85rem);
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
 }
 
 /* index.astro のメインコンテンツのスタイル */
 .main-content {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: clamp(0.4rem, 2vh, 1rem) 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(0.45rem, 2vh, 1.1rem);
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  position: relative;
+  padding-top: clamp(3.5rem, 9vh, 6rem);
+}
+
+.talking-cats {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  padding: 0 clamp(1.2rem, 6vw, 4rem);
+}
+
+.talking-cat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.6rem, 1.8vw, 1rem);
+  max-width: clamp(160px, 22vw, 240px);
+}
+
+.talking-cat--assistant {
+  margin-top: clamp(1rem, 4vh, 2.5rem);
+}
+
+.talking-cat img {
+  width: clamp(140px, 18vw, 220px);
+  height: auto;
+  filter: drop-shadow(0 16px 28px rgba(179, 145, 105, 0.28));
+}
+
+.talking-cat figcaption {
+  background-color: rgba(255, 255, 255, 0.94);
+  border-radius: 18px;
+  padding: clamp(0.65rem, 1.8vw, 1rem) clamp(0.75rem, 2.2vw, 1.2rem);
+  box-shadow: 0 16px 34px rgba(200, 170, 130, 0.2);
+  border: 2px solid rgba(245, 163, 146, 0.4);
+  font-size: clamp(1rem, 2.1vw, 1.2rem);
+  line-height: 1.4;
+  position: relative;
+}
+
+.talking-cat figcaption::after {
+  content: "";
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 16px 12px 0 12px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.94) transparent transparent transparent;
+  filter: drop-shadow(0 6px 8px rgba(200, 170, 130, 0.2));
+}
+
+.talking-cat--assistant figcaption::after {
+  bottom: auto;
+  top: -16px;
+  border-width: 0 12px 16px 12px;
+  border-color: transparent transparent rgba(255, 255, 255, 0.94) transparent;
+}
+
+.talking-cat--assistant figcaption {
+  margin-top: clamp(-0.2rem, -0.6vw, -0.1rem);
+}
+
+.bubble-heading {
+  display: block;
+  font-weight: 700;
+  color: #f38770;
+  margin-bottom: 0.35rem;
+  font-size: clamp(1.05rem, 2.3vw, 1.25rem);
+}
+
+@media (max-width: 1024px) {
+  .talking-cats {
+    padding: 0 clamp(0.5rem, 4vw, 1.5rem);
+  }
+
+  .story-comic {
+    width: min(94vw, 880px);
+  }
+
+  .comic-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .main-content {
+    padding-top: clamp(2.5rem, 8vh, 4rem);
+  }
+
+  .talking-cats {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.2rem, 4vw, 1.8rem);
+    margin-bottom: clamp(1rem, 4vw, 2rem);
+  }
+
+  .talking-cat {
+    max-width: 260px;
+  }
+
+  .talking-cat--assistant {
+    margin-top: 0;
+  }
+
+  .talking-cat figcaption::after {
+    bottom: -16px;
+    top: auto;
+    border-width: 16px 12px 0 12px;
+    border-color: rgba(255, 255, 255, 0.94) transparent transparent transparent;
+  }
+
+  .talking-cat--assistant figcaption {
+    margin-top: 0;
+  }
+
+  .story-comic {
+    width: 100%;
+    margin-top: clamp(1.6rem, 4vh, 2.4rem);
+  }
+
+  .comic-grid {
+    gap: clamp(0.9rem, 3vw, 1.2rem);
+  }
+}
+
+@media (max-width: 520px) {
+  .story-comic {
+    padding: clamp(1rem, 4vw, 1.4rem);
+  }
+
+  .comic-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .main-content h2 {
-  margin: 0.5rem 0;
+  margin: 0;
+  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
+  line-height: 1.15;
 }
 
 .paws-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  max-width: 700px;
-  margin: 2rem auto;
-  gap: 1rem;
+  max-width: 840px;
+  width: 100%;
+  margin: 0 auto;
+  gap: clamp(0.6rem, 2vh, 1rem);
   align-items: center;
   justify-items: center;
   position: relative;
+}
+
+.usage-carousel {
+  position: relative;
+  width: min(96vw, 1100px);
+  aspect-ratio: 16 / 9;
+  margin: clamp(1.8rem, 4vh, 2.6rem) auto 0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(200, 160, 110, 0.25);
+  border: 3px solid rgba(245, 163, 146, 0.35);
+  background: #fffaf4;
+}
+
+.usage-carousel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 20% 20%,
+    rgba(255, 210, 180, 0.25),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.carousel-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: usageCarousel 30s infinite;
+  transition: opacity 0.6s ease;
+}
+
+.carousel-image:nth-child(1) {
+  animation-delay: 0s;
+}
+.carousel-image:nth-child(2) {
+  animation-delay: 6s;
+}
+.carousel-image:nth-child(3) {
+  animation-delay: 12s;
+}
+.carousel-image:nth-child(4) {
+  animation-delay: 18s;
+}
+.carousel-image:nth-child(5) {
+  animation-delay: 24s;
+}
+
+@keyframes usageCarousel {
+  0%,
+  15% {
+    opacity: 1;
+  }
+  20%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.story-comic {
+  width: min(96vw, 1100px);
+  margin: clamp(2.2rem, 5vh, 3rem) auto 0;
+  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1rem, 2.5vw, 1.8rem);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 26px;
+  box-shadow: 0 18px 35px rgba(210, 170, 120, 0.22);
+  border: 3px solid rgba(216, 201, 123, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.story-comic::before,
+.story-comic::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(245, 163, 146, 0.35);
+  filter: blur(28px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.story-comic::before {
+  width: 160px;
+  height: 160px;
+  top: -60px;
+  left: -40px;
+}
+
+.story-comic::after {
+  width: 220px;
+  height: 220px;
+  bottom: -100px;
+  right: -70px;
+  background: rgba(184, 214, 255, 0.35);
+}
+
+.story-comic h3 {
+  margin: 0 0 clamp(1rem, 2vw, 1.4rem);
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  letter-spacing: 0.03em;
+}
+
+.comic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+  position: relative;
+  z-index: 1;
+}
+
+.comic-panel {
+  margin: 0;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 248, 236, 0.95),
+    rgba(255, 240, 220, 0.85)
+  );
+  border-radius: 18px;
+  padding: clamp(0.9rem, 2vw, 1.3rem);
+  box-shadow: inset 0 0 0 2px rgba(245, 163, 146, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.4rem, 1.2vw, 0.8rem);
+  min-height: 180px;
+}
+
+.panel-number {
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  font-weight: 700;
+  color: #f38770;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  align-self: flex-start;
+  padding: 0.1rem 0.6rem;
+  box-shadow: 0 6px 10px rgba(240, 150, 120, 0.2);
+}
+
+.comic-panel h4 {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+}
+
+.comic-panel p {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.9vw, 1.1rem);
+  line-height: 1.6;
 }
 
 .paw-item {
@@ -40,12 +458,12 @@ body {
   align-items: center;
   text-decoration: none;
   color: #000;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1.8vh, 1.1rem);
   transition: transform 0.2s ease;
 }
 
 .paw-item img {
-  width: 120px;
+  width: clamp(90px, 13vh, 168px);
   height: auto;
 }
 
@@ -59,7 +477,7 @@ body {
 }
 
 .cat-center img {
-  width: 200px;
+  width: clamp(120px, 19vh, 210px);
   height: auto;
 }
 
@@ -67,11 +485,12 @@ body {
   display: inline-block;
   background-color: #f5a392;
   color: white;
-  padding: 0.8rem 2rem;
+  padding: clamp(0.55rem, 1.8vh, 0.9rem)
+    clamp(1.4rem, 4.6vw, 2.3rem);
   border-radius: 8px;
   text-decoration: none;
-  font-size: 1rem;
-  margin-top: 1rem;
+  font-size: clamp(1.05rem, 2vh, 1.35rem);
+  margin-top: 0;
   transition: background 0.3s;
 }
 
@@ -80,10 +499,24 @@ body {
 }
 
 footer {
-  margin-top: 2rem;
+  margin-top: auto;
   text-align: center;
   color: #777;
-  padding-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+@media (max-height: 780px) {
+  .main-content {
+    transform: scale(0.95);
+    transform-origin: top center;
+  }
+}
+
+@media (max-height: 700px) {
+  .main-content {
+    transform: scale(0.9);
+  }
 }
 
 
@@ -108,7 +541,7 @@ footer {
   width: auto; /* <--- 修正箇所：幅を自動調整に変更し、改行を防ぐ */
   margin-bottom: 1rem;
   text-decoration: none;
-  color: #007bff !important;
+  color: #007bff;
   font-size: 1rem;
   padding: 0.5rem;
   transition: color 0.2s;
