@@ -151,6 +151,7 @@ main::after {
   justify-content: space-between;
   align-items: flex-start;
   pointer-events: none;
+  top: 150px;
   padding: 0 clamp(1.2rem, 6vw, 4rem);
 }
 
@@ -915,4 +916,5 @@ header.header {
   height: 200%;  /* 縦2倍 */
   object-fit: contain; /* 画像の比率を崩さずに拡大したい場合 */
 }
+
 
