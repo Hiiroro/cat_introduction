@@ -768,15 +768,39 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: clamp(0.5rem, 3vw, 1.5rem);
   margin: 2rem 0;
+  flex-wrap: nowrap;
 }
 
 .slideshow img {
-  width: 80%;
+  width: min(75vw, 700px);
   max-width: 700px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: opacity 0.5s ease;
+}
+
+.slide-control {
+  position: relative;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #f08a5d;
+  font-size: 1.8rem;
+  font-weight: bold;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.slide-control:hover {
+  background: #f08a5d;
+  color: #fff;
+  transform: scale(1.05);
 }
 
 /* 「もう一度見る」テキストボタン */
@@ -963,7 +987,3 @@ header.header {
   text-decoration: underline;
   opacity: 0.8;
 }
-
-
-
-

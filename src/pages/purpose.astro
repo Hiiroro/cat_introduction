@@ -91,7 +91,23 @@ import "../styles/global.css";
         <h2>タスク入力までの手順</h2>
 
         <div class="slideshow">
+          <button
+            type="button"
+            id="prev-btn"
+            class="slide-control slide-control--prev"
+            aria-label="前の画像へ"
+          >
+            ◀
+          </button>
           <img src="/1枚目.png" alt="手順1" id="slide-img" />
+          <button
+            type="button"
+            id="next-btn"
+            class="slide-control slide-control--next"
+            aria-label="次の画像へ"
+          >
+            ▶
+          </button>
           <div id="restart-text" class="restart-text">もう一度見る</div>
         </div>
       </section>
@@ -124,32 +140,79 @@ import "../styles/global.css";
       let current = 0;
       const imgElement = document.getElementById("slide-img");
       const restartText = document.getElementById("restart-text");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const intervalDuration = 3000;
+      let intervalId = startAutoPlay();
+      let restartTimeoutId = null;
 
-      let intervalId = setInterval(nextImage, 3000);
+      function showImage(index) {
+        current = (index + images.length) % images.length;
+        imgElement.src = images[current];
+      }
 
       function nextImage() {
-        current++;
-        if (current < images.length) {
-          imgElement.src = images[current];
+        if (current < images.length - 1) {
+          showImage(current + 1);
         } else {
-          clearInterval(intervalId);
-          setTimeout(() => {
-            restartText.style.display = "block";
-            restartText.classList.add("fade-in");
-          }, 3000);
+          stopAutoPlay();
+          scheduleRestartPrompt();
         }
       }
 
-      restartText.addEventListener("click", () => {
-        current = 0;
-        imgElement.src = images[current];
+      function startAutoPlay() {
+        return setInterval(nextImage, intervalDuration);
+      }
+
+      function stopAutoPlay() {
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+      }
+
+      function resetAutoPlay() {
+        stopAutoPlay();
+        hideRestartPrompt();
+        intervalId = startAutoPlay();
+      }
+
+      function scheduleRestartPrompt() {
+        restartTimeoutId = setTimeout(() => {
+          restartText.style.display = "block";
+          restartText.classList.add("fade-in");
+        }, 3000);
+      }
+
+      function hideRestartPrompt() {
+        if (restartTimeoutId) {
+          clearTimeout(restartTimeoutId);
+          restartTimeoutId = null;
+        }
         restartText.style.display = "none";
         restartText.classList.remove("fade-in");
-        intervalId = setInterval(nextImage, 3000);
+      }
+
+      restartText.addEventListener("click", () => {
+        showImage(0);
+        resetAutoPlay();
+      });
+
+      prevBtn.addEventListener("click", () => {
+        showImage(current - 1);
+        resetAutoPlay();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (current === images.length - 1) {
+          showImage(0);
+        } else {
+          showImage(current + 1);
+        }
+        resetAutoPlay();
       });
     </script>
   </body>
 </html>
-
 
 
