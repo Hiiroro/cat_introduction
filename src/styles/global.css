@@ -207,6 +207,14 @@ main::after {
   margin-top: clamp(-0.2rem, -0.6vw, -0.1rem);
 }
 
+.talking-cat--professor figcaption::after {
+  bottom: auto;
+  top: -16px;
+  border-width: 0 12px 16px 12px;
+  border-color: transparent transparent rgba(255, 255, 255, 0.94) transparent;
+}
+
+
 .bubble-heading {
   display: block;
   font-weight: 700;
@@ -916,5 +924,46 @@ header.header {
   height: 200%;  /* 縦2倍 */
   object-fit: contain; /* 画像の比率を崩さずに拡大したい場合 */
 }
+
+/* 🐾 ヘッダー内ナビゲーション */
+.header {
+  background-color: #d8c97b;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+  position: relative; /* ← navを配置するために追加 */
+}
+
+.header {
+  background-color: #d8c97b;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem; /* タイトルとメニューの間に余白 */
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center; /* 中央揃え */
+  gap: 1.5rem; /* リンク間の余白 */
+}
+
+.nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.nav-menu a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+
 
 
