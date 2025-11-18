@@ -1,0 +1,186 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>レビュー | 猫の手も借りたい</title>
+    <style>
+      /* --- 既存のスタイルはそのまま --- */
+      .review-form,
+      .current-rating,
+      .review-log {
+        background-color: #fff;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        margin-bottom: 1rem;
+      }
+
+      .rating-container {
+        text-align: center;
+      }
+
+      .rating img {
+        width: 40px;
+        cursor: pointer;
+        margin: 0 2px;
+      }
+
+      .rating-value {
+        margin-top: 0.3rem;
+        color: red;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .log-entry {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 0.5rem;
+      }
+
+      .log-entry strong {
+        display: block;
+        margin-top: 0.3rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <!-- 1. フォーム -->
+      <section class="review-form">
+        <h3 style="text-align:center">レビューを書いてください</h3>
+
+        <form id="reviewForm">
+          <div class="rating-container">
+            <p>評価を選んでください（0.5刻み）</p>
+            <div class="rating" id="rating"></div>
+            <p id="ratingValue" class="rating-value">現在の評価: 0.0</p>
+          </div>
+
+          <label for="reviewText">コメント:</label>
+          <textarea
+            id="reviewText"
+            name="reviewText"
+            placeholder="レビューを入力してください..."
+            required
+          ></textarea>
+
+          <button type="submit">投稿する</button>
+        </form>
+      </section>
+
+      <!-- 2. 平均評価 -->
+      <section class="current-rating">
+        <h3>平均評価</h3>
+        <p id="averageRating">まだ投稿がありません</p>
+      </section>
+
+      <!-- 3. 過去投稿ログ -->
+      <section class="review-log">
+        <h3 style="text-align:center">過去の投稿</h3>
+        <div id="logContainer"></div>
+      </section>
+    </main>
+
+    <script type="module">
+      const ratingContainer = document.getElementById("rating");
+      const ratingValue = document.getElementById("ratingValue");
+      const logContainer = document.getElementById("logContainer");
+      const averageRating = document.getElementById("averageRating");
+
+      const total = 5;
+      let currentRating = 0;
+
+      // 肉球生成
+      for (let i = 1; i <= total; i++) {
+        const img = document.createElement("img");
+        img.src = "/paw_empty.png";
+        img.dataset.index = i;
+        img.classList.add("paw");
+        ratingContainer.appendChild(img);
+
+        img.addEventListener("mousemove", (e) => handleHover(e, i));
+        img.addEventListener("mouseleave", () => highlightPaws(currentRating));
+        img.addEventListener("click", (e) => handleClick(e, i));
+      }
+
+      function handleHover(e, index) {
+        const rect = e.target.getBoundingClientRect();
+        const isLeft = e.clientX - rect.left < rect.width / 2;
+        const value = index - (isLeft ? 0.5 : 0);
+        highlightPaws(value);
+      }
+
+      function handleClick(e, index) {
+        const rect = e.target.getBoundingClientRect();
+        const isLeft = e.clientX - rect.left < rect.width / 2;
+        currentRating = index - (isLeft ? 0.5 : 0);
+        highlightPaws(currentRating);
+        ratingValue.textContent = `現在の評価: ${currentRating.toFixed(1)}`;
+      }
+
+      function highlightPaws(value) {
+        const paws = document.querySelectorAll(".paw");
+        paws.forEach((paw, i) => {
+          const idx = i + 1;
+          if (value >= idx) paw.src = "/paw_full.png";
+          else if (value >= idx - 0.5) paw.src = "/paw_half.png";
+          else paw.src = "/paw_empty.png";
+        });
+      }
+
+      // --- サーバー連携 ---
+      async function fetchReviews() {
+        const res = await fetch("/api/reviews");
+        const reviews = await res.json();
+
+        logContainer.innerHTML = "";
+        let total = 0;
+
+        reviews.forEach(entry => {
+          total += entry.rating;
+          const logEntry = document.createElement("div");
+          logEntry.classList.add("log-entry");
+          logEntry.innerHTML = `
+            <div><strong>評価:</strong> ${entry.rating.toFixed(1)} 点</div>
+            <div><strong>コメント:</strong><br>${entry.comment}</div>
+          `;
+          logContainer.appendChild(logEntry);
+        });
+
+        if (reviews.length > 0) {
+          const avg = total / reviews.length;
+          averageRating.textContent = `平均評価: ${avg.toFixed(1)} 点 (${reviews.length} 件)`;
+        } else {
+          averageRating.textContent = "まだ投稿がありません";
+        }
+      }
+
+      document.getElementById("reviewForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const comment = document.getElementById("reviewText").value;
+
+        await fetch("/api/reviews", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rating: currentRating, comment }),
+        });
+
+        currentRating = 0;
+        highlightPaws(currentRating);
+        document.getElementById("reviewText").value = "";
+        ratingValue.textContent = "現在の評価: 0.0";
+
+        fetchReviews();
+      });
+
+      // ページ読み込み時
+      fetchReviews();
+    </script>
+  </body>
+</html>

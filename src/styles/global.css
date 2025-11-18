@@ -981,9 +981,87 @@ header.header {
   font-size: 0.95rem;
   font-weight: 600;
   transition: 0.2s;
+  
 }
 
 .nav-menu a:hover {
   text-decoration: underline;
   opacity: 0.8;
 }
+
+/* 肉球 */
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.rating img.paw {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  object-fit: contain;
+}
+
+/* フォーム内の要素を中央揃え */
+#reviewForm {
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  align-items: center;    /* 全要素を横方向中央揃え */
+  text-align: center;     /* テキストも中央 */
+}
+
+/* テキストエリアを中央寄せ */
+#reviewText {
+  width: 90%;             /* 少し狭めると中央感が出る */
+  max-width: 400px;
+  margin: 0.5rem auto;
+  display: block;
+}
+
+/* ボタンを中央揃え */
+#reviewForm button {
+  margin: 0.7rem auto;
+  display: block;
+}
+
+/* 評価（⭐部分）も中央のまま */
+.rating-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.log-entry {
+  margin-bottom: 1.5rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  position: relative; /* ←追加 */
+  z-index: 10;        /* ←他の要素より前面に */
+}
+
+.current-rating {
+  text-align: center;
+}
+
+
+.review-form,
+.current-rating,
+.review-log {
+  max-width: 600px;       /* 背景の最大幅を指定 */
+  margin: 1.5rem auto;    /* 上下は余白、左右は自動で中央寄せ */
+  padding: 1rem 1.5rem;   /* 内側の余白 */
+  background-color: #fff; /* 背景を白に */
+  border-radius: 12px;    /* 角丸（任意） */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 軽く影をつけると浮き上がる */
+}
+
+
+
+
+

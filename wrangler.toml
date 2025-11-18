@@ -1,0 +1,10 @@
+name = "cat-review"
+main = "functions/api/reviews.js"
+account_id = "3c2cefc4fe64a66ca743eecbd5ef7078"
+compatibility_date = "2025-11-12"
+
+[env.dev]
+d1_databases = [
+  { binding = "REVIEWS_DB", database_name = "reviews_db" }
+]
+
