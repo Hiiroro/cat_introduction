@@ -7,6 +7,10 @@ html {
   font-size: clamp(16px, 1.6vw, 19px);
 }
 
+:root {
+  --header-offset: clamp(6rem, 14vh, 8rem);
+}
+
 body {
   font-family: "Hiragino Kaku Gothic ProN", sans-serif;
   background: radial-gradient(
@@ -124,8 +128,13 @@ main::after {
   background-size: 100% 100%, 80px;
   background-repeat: no-repeat, repeat;
   text-align: center;
-  padding: clamp(0.5rem, 1.8vh, 0.85rem);
-  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  padding: clamp(0.65rem, 2vh, 1.1rem) clamp(0.8rem, 2vw, 1.5rem);
+  position: relative;
+}
+
+.header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 clamp(0.4rem, 1vh, 0.8rem);
 }
 
 /* index.astro のメインコンテンツのスタイル */
@@ -291,8 +300,8 @@ main::after {
 
 .main-content h2 {
   margin: 0;
-  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
-  line-height: 1.15;
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+  line-height: 1.2;
 }
 
 .paws-grid {
@@ -834,9 +843,9 @@ footer {
 /* --- サイド猫のデザイン --- */
 .cat-side {
   position: fixed;
-  top: 0;
+  top: var(--header-offset);
   width: 120px;
-  height: 100%;
+  height: calc(100% - var(--header-offset));
   background-image: url("/cat.png");
   background-repeat: repeat-y;
   background-size: contain;
@@ -900,9 +909,15 @@ header.header {
   top: 0;
   left: 0;
   width: 100%;
-  background: #d8c97b; /* 下の内容が透けない様に */
+  background-image: linear-gradient(
+      rgba(216, 201, 123, 0.92),
+      rgba(216, 201, 123, 0.92)
+    ),
+    url("/miharineko.webp");
+  background-size: 100% 100%, 80px;
+  background-repeat: no-repeat, repeat;
   z-index: 1000;
-  padding: 10px 0;
+  padding: clamp(0.65rem, 2vh, 1.1rem) clamp(0.8rem, 2vw, 1.5rem);
   text-align: center;
   border-bottom: 2px solid #f2c4d4; /* 可愛い線(任意) */
 }
@@ -951,28 +966,31 @@ header.header {
 
 /* 🐾 ヘッダー内ナビゲーション */
 .header {
-  background-color: #d8c97b;
+  background-image: linear-gradient(
+      rgba(216, 201, 123, 0.92),
+      rgba(216, 201, 123, 0.92)
+    ),
+    url("/miharineko.webp");
+  background-size: 100% 100%, 80px;
+  background-repeat: no-repeat, repeat;
   text-align: center;
-  padding: 1rem;
-  font-size: 1.5rem;
-  position: relative; /* ← navを配置するために追加 */
-}
-
-.header {
-  background-color: #d8c97b;
-  text-align: center;
-  padding: 1rem 0;
+  padding: clamp(0.65rem, 2vh, 1.1rem) clamp(0.8rem, 2vw, 1.5rem);
+  position: relative; /* nav配置 */
 }
 
 .header h1 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem; /* タイトルとメニューの間に余白 */
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(0.4rem, 1vh, 0.8rem);
 }
 
 .nav-menu {
   display: flex;
-  justify-content: center; /* 中央揃え */
+  justify-content: flex-end;
   gap: 1.5rem; /* リンク間の余白 */
+  width: min(92vw, 960px);
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-right: clamp(0.4rem, 1.2vw, 1.2rem);
 }
 
 .nav-menu a {
