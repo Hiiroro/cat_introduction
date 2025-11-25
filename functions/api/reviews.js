@@ -11,11 +11,15 @@ export async function onRequest(context) {
     });
   }
 
-  // POST → 追加
+  // POST → データ追加
   if (request.method === "POST") {
     const body = await request.json();
 
+    // 送られてきたデータをそのまま保存
     reviews.push({
+      ui: body.ui ?? null,
+      features: body.features ?? null,
+      stability: body.stability ?? null,
       rating: body.rating,
       comment: body.comment,
       time: Date.now()

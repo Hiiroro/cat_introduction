@@ -8,7 +8,6 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>レビュー | 猫の手も借りたい</title>
     <style>
-      /* --- 既存のスタイルはそのまま --- */
       .review-form,
       .current-rating,
       .review-log {
@@ -42,9 +41,22 @@ import "../styles/global.css";
         padding-bottom: 0.5rem;
       }
 
-      .log-entry strong {
-        display: block;
-        margin-top: 0.3rem;
+      .total-score {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: red;
+        margin: 0.4rem 0;
+      }
+
+      .small-score {
+        font-size: 0.85rem;
+        color: #555;
+      }
+
+      select {
+        width: 100%;
+        padding: 0.3rem;
+        margin-bottom: 0.5rem;
       }
     </style>
   </head>
@@ -56,10 +68,41 @@ import "../styles/global.css";
         <h3 style="text-align:center">レビューを書いてください</h3>
 
         <form id="reviewForm">
+          <!-- UI -->
+          <label>UIの使いやすさ（5段階）</label>
+          <select id="uiScore" required>
+            <option value="5">5（とても良い）</option>
+            <option value="4">4（良い）</option>
+            <option value="3">3（普通）</option>
+            <option value="2">2（やや不便）</option>
+            <option value="1">1（悪い）</option>
+          </select>
+
+          <!-- 機能 -->
+          <label>機能の充実度（5段階）</label>
+          <select id="featureScore" required>
+            <option value="5">5（とても良い）</option>
+            <option value="4">4（良い）</option>
+            <option value="3">3（普通）</option>
+            <option value="2">2（不足あり）</option>
+            <option value="1">1（不満）</option>
+          </select>
+
+          <!-- 安定性 -->
+          <label>アプリの安定性（5段階）</label>
+          <select id="stabilityScore" required>
+            <option value="5">5（とても安定）</option>
+            <option value="4">4（安定）</option>
+            <option value="3">3（普通）</option>
+            <option value="2">2（やや不安定）</option>
+            <option value="1">1（不安定）</option>
+          </select>
+
+          <!-- 総合評価 -->
           <div class="rating-container">
-            <p>評価を選んでください（0.5刻み）</p>
+            <p>総合評価（0.5刻み）</p>
             <div class="rating" id="rating"></div>
-            <p id="ratingValue" class="rating-value">現在の評価: 0.0</p>
+            <p id="ratingValue" class="rating-value">現在の総合評価: 0.0</p>
           </div>
 
           <label for="reviewText">コメント:</label>
@@ -76,7 +119,7 @@ import "../styles/global.css";
 
       <!-- 2. 平均評価 -->
       <section class="current-rating">
-        <h3>平均評価</h3>
+        <h3>平均評価（総合）</h3>
         <p id="averageRating">まだ投稿がありません</p>
       </section>
 
@@ -96,7 +139,10 @@ import "../styles/global.css";
       const total = 5;
       let currentRating = 0;
 
-      // 肉球生成
+      // ★ undefinedを "-" にする関数
+      const safe = (v) => (v ?? "-");
+
+      /* 肉球生成 */
       for (let i = 1; i <= total; i++) {
         const img = document.createElement("img");
         img.src = "/paw_empty.png";
@@ -121,7 +167,7 @@ import "../styles/global.css";
         const isLeft = e.clientX - rect.left < rect.width / 2;
         currentRating = index - (isLeft ? 0.5 : 0);
         highlightPaws(currentRating);
-        ratingValue.textContent = `現在の評価: ${currentRating.toFixed(1)}`;
+        ratingValue.textContent = `現在の総合評価: ${currentRating.toFixed(1)}`;
       }
 
       function highlightPaws(value) {
@@ -134,28 +180,34 @@ import "../styles/global.css";
         });
       }
 
-      // --- サーバー連携 ---
+      /* 過去レビューの取得 */
       async function fetchReviews() {
         const res = await fetch("/api/reviews");
         const reviews = await res.json();
 
         logContainer.innerHTML = "";
-        let total = 0;
+        let totalScore = 0;
 
         reviews.forEach(entry => {
-          total += entry.rating;
+          totalScore += entry.rating;
+
           const logEntry = document.createElement("div");
           logEntry.classList.add("log-entry");
           logEntry.innerHTML = `
-            <div><strong>評価:</strong> ${entry.rating.toFixed(1)} 点</div>
-            <div><strong>コメント:</strong><br>${entry.comment}</div>
+            <div class="small-score"><strong>UI:</strong> ${safe(entry.ui)} / 5</div>
+            <div class="small-score"><strong>機能:</strong> ${safe(entry.features)} / 5</div>
+            <div class="small-score"><strong>安定性:</strong> ${safe(entry.stability)} / 5</div>
+
+            <div class="total-score"><strong>総合評価:</strong> ${safe(entry.rating.toFixed(1))} / 5</div>
+
+            <div class="small-score"><strong>コメント:</strong><br>${entry.comment}</div>
           `;
           logContainer.appendChild(logEntry);
         });
 
         if (reviews.length > 0) {
-          const avg = total / reviews.length;
-          averageRating.textContent = `平均評価: ${avg.toFixed(1)} 点 (${reviews.length} 件)`;
+          const avg = totalScore / reviews.length;
+          averageRating.textContent = `平均総合評価: ${avg.toFixed(1)} 点 (${reviews.length} 件)`;
         } else {
           averageRating.textContent = "まだ投稿がありません";
         }
@@ -163,23 +215,29 @@ import "../styles/global.css";
 
       document.getElementById("reviewForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const comment = document.getElementById("reviewText").value;
+
+        const newReview = {
+          ui: Number(document.getElementById("uiScore").value),
+          features: Number(document.getElementById("featureScore").value),
+          stability: Number(document.getElementById("stabilityScore").value),
+          rating: currentRating,
+          comment: document.getElementById("reviewText").value,
+        };
 
         await fetch("/api/reviews", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ rating: currentRating, comment }),
+          body: JSON.stringify(newReview),
         });
 
         currentRating = 0;
         highlightPaws(currentRating);
+        ratingValue.textContent = "現在の総合評価: 0.0";
         document.getElementById("reviewText").value = "";
-        ratingValue.textContent = "現在の評価: 0.0";
 
         fetchReviews();
       });
 
-      // ページ読み込み時
       fetchReviews();
     </script>
   </body>
