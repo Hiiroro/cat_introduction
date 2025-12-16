@@ -29,6 +29,11 @@ body {
   overflow-x: hidden;
 }
 
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
 body > * {
   position: relative;
   z-index: 1;
@@ -974,29 +979,37 @@ header.header {
   background-size: 100% 100%, 80px;
   background-repeat: no-repeat, repeat;
   text-align: center;
-  padding: clamp(0.65rem, 2vh, 1.1rem) clamp(0.8rem, 2vw, 1.5rem);
+  padding: clamp(0.8rem, 2.3vh, 1.4rem) clamp(1rem, 3vw, 1.8rem);
   position: relative; /* nav配置 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.35rem, 1vh, 0.75rem);
+  min-height: clamp(130px, 16vh, 175px);
 }
 
 .header h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: clamp(0.4rem, 1vh, 0.8rem);
+  font-size: clamp(2.6rem, 5vw, 3.9rem);
+  line-height: 1.08;
+  margin: clamp(0.35rem, 1vh, 0.7rem) 0 0;
 }
 
 .nav-menu {
   display: flex;
   justify-content: flex-end;
-  gap: 1.5rem; /* リンク間の余白 */
-  width: min(92vw, 960px);
-  margin: 0 auto;
+  gap: clamp(0.9rem, 2vw, 1.6rem); /* リンク間の余白 */
+  width: 100%;
+  max-width: min(92vw, 1040px);
+  margin: 0 auto 0 0;
   box-sizing: border-box;
-  padding-right: clamp(0.4rem, 1.2vw, 1.2rem);
+  padding-right: clamp(0.4rem, 1vw, 1.2rem);
+  flex-wrap: wrap;
 }
 
 .nav-menu a {
   color: #fff;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   transition: 0.2s;
 }
