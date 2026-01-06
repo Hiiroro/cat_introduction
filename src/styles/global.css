@@ -1,6 +1,7 @@
 html,
 body {
-  height: 100%;
+  min-height: 100%;
+  height: auto;
 }
 
 html {
@@ -23,10 +24,13 @@ body {
   line-height: 1.7;
   cursor: url("/play_32.png"), auto;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 body > * {
@@ -161,7 +165,7 @@ main::after {
   align-items: flex-start;
   pointer-events: none;
   top: 150px; 
-  padding: 0 clamp(1.2rem, 6vw, 4rem);
+  padding: 0;
 }
 
 .talking-cat {
@@ -170,6 +174,24 @@ main::after {
   align-items: center;
   gap: clamp(0.6rem, 1.8vw, 1rem);
   max-width: clamp(160px, 22vw, 240px);
+}
+
+.talking-cat--professor {
+  align-items: flex-start;
+}
+
+.talking-cat--assistant {
+  align-items: flex-end;
+}
+
+@media (min-width: 721px) {
+  .talking-cat--professor {
+    transform: translateX(-6vw);
+  }
+
+  .talking-cat--assistant {
+    transform: translateX(6vw);
+  }
 }
 
 .talking-cat--assistant {
@@ -191,6 +213,7 @@ main::after {
   font-size: clamp(1rem, 2.1vw, 1.2rem);
   line-height: 1.4;
   position: relative;
+  max-width: clamp(180px, 24vw, 300px);
 }
 
 .talking-cat figcaption::after {
@@ -308,9 +331,9 @@ main::after {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  max-width: 840px;
+  max-width: 650px;
   width: 100%;
-  margin: 0 auto;
+  margin: clamp(1.2rem, 4vh, 2.5rem) auto 0;
   gap: clamp(0.6rem, 2vh, 1rem);
   align-items: center;
   justify-items: center;
@@ -481,7 +504,7 @@ main::after {
 }
 
 .paw-item img {
-  width: clamp(90px, 13vh, 168px);
+  width: clamp(110px, 16vh, 200px);
   height: auto;
 }
 
@@ -946,6 +969,8 @@ header.header {
   top: 20px;
   left: 20px;
   z-index: 999999 !important; /* ←強制的に最前面 */
+  padding: 10px 16px;
+  font-size: 1.1rem;
 }
 
 /* 他の要素が z-index で邪魔している可能性を排除 */
@@ -1004,4 +1029,31 @@ header.header {
 .nav-menu a:hover {
   text-decoration: underline;
   opacity: 0.8;
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 18px;
+  }
+
+  .main-content,
+  .page-content {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(24px, 6vw, 140px);
+    padding-right: clamp(24px, 6vw, 140px);
+  }
+
+  .nav-menu {
+    width: 100%;
+    max-width: 1100px;
+    padding-right: 0;
+  }
+
+  .usage-carousel,
+  .story-comic {
+    width: 1100px;
+  }
 }
